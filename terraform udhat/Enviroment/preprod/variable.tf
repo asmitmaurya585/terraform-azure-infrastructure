@@ -1,0 +1,2 @@
+variable "asmitrg" {}
+variable "asmitstg" {}
