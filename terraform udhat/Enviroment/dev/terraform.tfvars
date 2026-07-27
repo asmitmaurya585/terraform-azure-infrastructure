@@ -20,6 +20,12 @@ asmitvnet = {
     resource_group_name = "devrg"
     address_space       = ["10.0.0.0/16"]
   }
+  vnet2 = {
+    name                = "devvent2"
+    location            = "centralindia"
+    resource_group_name = "devrg"
+    address_space       = ["10.0.5.0/16"]
+  }
 }
 
 asmitsub = {
