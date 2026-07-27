@@ -3,6 +3,14 @@ asmitrg = {
     name     = "devrg"
     location = "centralindia"
   }
+  rg2 = {
+    name     = "devrg2"
+    location = "centralindia"
+  }
+  rg3 = {
+    name     = "devrg3"
+    location = "centralindia"
+  }
 }
 
 asmitvnet = {
