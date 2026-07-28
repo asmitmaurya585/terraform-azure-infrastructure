@@ -55,3 +55,11 @@ module "application_gateway" {
   app_gateway = var.app_gateway
 }
 
+module "key_vault" {
+  depends_on = [module.resource_group]
+  source     = "../../module/azurerm_key_vault"
+  key_vault  = var.key_vault
+  secrets    = var.secrets
+}
+
+

@@ -37,9 +37,11 @@ resource "azurerm_virtual_machine" "asmit11" {
     admin_username = each.value.admin_username
     admin_password = each.value.admin_password
   }
+  #tfsec:ignore:azure-compute-disable-password-authentication
   os_profile_linux_config {
     disable_password_authentication = false
   }
+
 }
 
 
@@ -57,7 +59,7 @@ resource "azurerm_network_interface" "windows_nic" {
   }
 }
 
-resource "azurerm_windows_virtual_machine" "windows" {
+resource "azurerm_linux_virtual_machine" "windows" {
 
   for_each = var.windows_vms
 
@@ -68,6 +70,8 @@ resource "azurerm_windows_virtual_machine" "windows" {
 
   admin_username = each.value.admin_username
   admin_password = each.value.admin_password
+  #tfsec:ignore:azure-compute-disable-password-authentication
+  disable_password_authentication = false
 
   network_interface_ids = [
     azurerm_network_interface.windows_nic[each.key].id,

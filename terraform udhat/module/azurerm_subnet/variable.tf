@@ -1,1 +1,3 @@
-variable "asmitsub" {}
+variable "asmitsub" {
+  type = any
+}

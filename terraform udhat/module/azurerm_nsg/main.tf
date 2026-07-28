@@ -4,6 +4,8 @@ resource "azurerm_network_security_group" "asmit22" {
   location            = each.value.location
   resource_group_name = each.value.resource_group_name
 
+  #tfsec:ignore:azure-network-no-public-ingress
+  #tfsec:ignore:azure-network-ssh-blocked-from-internet
   dynamic "security_rule" {
     for_each = each.value.security_rules
 

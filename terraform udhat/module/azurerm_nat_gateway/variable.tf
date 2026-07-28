@@ -1,3 +1,9 @@
-variable "nat_gateway" {}
-variable "subnet_association" {}
-variable "nat_gateway1" {}
+variable "nat_gateway" {
+  type = any
+}
+variable "subnet_association" {
+  type = any
+}
+variable "nat_gateway1" {
+  type = any
+}

@@ -20,12 +20,7 @@ asmitvnet = {
     resource_group_name = "devrg"
     address_space       = ["10.0.0.0/16"]
   }
-  vnet2 = {
-    name                = "devvent2"
-    location            = "centralindia"
-    resource_group_name = "devrg"
-    address_space       = ["10.0.5.0/16"]
-  }
+ 
 }
 
 asmitsub = {
@@ -160,7 +155,7 @@ windows_vms = {
     ip_configuration_name         = "internal"
     private_ip_address_allocation = "Dynamic"
 
-    vm_name             = "windows-dev2"
+    vm_name             = "linux-dev2"
     location            = "centralindia"
     resource_group_name = "devrg"
     vm_size             = "Standard_D2s_v3"
@@ -168,17 +163,17 @@ windows_vms = {
     admin_username = "azureadmin"
     admin_password = "Asmit@123456"
 
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2022-datacenter-azure-edition"
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
     version   = "latest"
 
-    os_disk_name      = "windowsosdisk2"
+    os_disk_name      = "linuxosdisk2"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
 
-    computer_name = "windows-host2"
+    computer_name = "linux-host2"
   }
 }
 
@@ -216,20 +211,31 @@ nsg = {
   }
 
   windows = {
-    name                = "windows-nsg"
+    name                = "linux2-nsg"
     location            = "centralindia"
     resource_group_name = "devrg"
     nic_name            = "nicdev2"
 
     security_rules = [
       {
-        name                       = "Allow-RDP"
+        name                       = "Allow-SSH"
         priority                   = 100
         direction                  = "Inbound"
         access                     = "Allow"
         protocol                   = "Tcp"
         source_port_range          = "*"
-        destination_port_range     = "3389"
+        destination_port_range     = "22"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      },
+      {
+        name                       = "Allow-HTTP"
+        priority                   = 110
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "80"
         source_address_prefix      = "*"
         destination_address_prefix = "*"
       }
@@ -251,7 +257,12 @@ app_gateway = {
     gateway_ip_configuration_name          = "appGatewayIpConfig"
     frontend_port_name                     = "http-port"
     frontend_port                          = 80
+    https_frontend_port_name               = "https-port"
+    https_frontend_port                    = 443
     frontend_ip_configuration_name         = "appGatewayFrontendIP"
+    ssl_certificate_name                   = "appgw-ssl-cert"
+    ssl_certificate_path                   = "appgwcert.pfx"
+    ssl_certificate_password               = "Asmit@123456"
     linux_nic_name                         = "nicdev"
     windows_nic_name                       = "nicdev2"
     linux_backend_pool_name                = "linux-backend-pool"
@@ -266,15 +277,40 @@ app_gateway = {
     request_timeout                        = 60
     linux_listener_name                    = "linux-listener"
     windows_listener_name                  = "windows-listener"
-    http_listener_protocol                 = "Http"
+    http_listener_protocol                 = "Https"
     linux_host_name                        = "linux.b18g66.online"
     windows_host_name                      = "windows.b18g66.online"
     linux_rule_name                        = "linux-rule"
+    windows_rule_priority                  = 20
+    linux_rule_priority                    = 10
     windows_rule_name                      = "windows-rule"
     rule_type                              = "Basic"
-    linux_rule_priority                    = 10
-    windows_rule_priority                  = 20
   }
 }
+
+key_vault = {
+  kv1 = {
+    name                     = "devkeyvault-asmit-01"
+    location                 = "centralindia"
+    resource_group_name      = "devrg"
+    sku_name                 = "standard"
+    purge_protection_enabled = true
+  }
+}
+
+secrets = {
+  vm1_secret = {
+    name          = "fronted-dev-vm-password"
+    value         = "asmit@123456"
+    key_vault_key = "kv1"
+  }
+  vm2_secret = {
+    name          = "linux-dev2-vm-password"
+    value         = "Asmit@123456"
+    key_vault_key = "kv1"
+  }
+}
+
+
 
 
