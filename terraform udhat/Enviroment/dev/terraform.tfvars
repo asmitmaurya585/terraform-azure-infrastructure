@@ -20,7 +20,7 @@ asmitvnet = {
     resource_group_name = "devrg"
     address_space       = ["10.0.0.0/16"]
   }
- 
+
 }
 
 asmitsub = {
@@ -310,6 +310,17 @@ secrets = {
     key_vault_key = "kv1"
   }
 }
+
+log_analytics_workspace = {
+  law1 = {
+    name                = "dev-log-analytics-workspace"
+    location            = "centralindia"
+    resource_group_name = "devrg"
+    sku                 = "PerGB2018"
+    retention_in_days   = 30
+  }
+}
+
 
 
 

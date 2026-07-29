@@ -119,4 +119,10 @@ variable "secrets" {
   default = {}
 }
 
+variable "log_analytics_workspace" {
+  type    = any
+  default = {}
+}
+
+
 

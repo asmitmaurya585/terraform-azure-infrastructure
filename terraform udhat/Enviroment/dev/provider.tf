@@ -3,13 +3,14 @@ terraform {
   required_providers {
 
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
+      version = ">= 3.0.0"
     }
   }
   backend "azurerm" {
     resource_group_name  = "rgamit"
-    storage_account_name = "asmitstorage" # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.
-    container_name       = "asmitcon"     # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
+    storage_account_name = "asmitstorage"
+    container_name       = "asmitcon"
     key                  = "prod.terraform.tfstate"
   }
 }

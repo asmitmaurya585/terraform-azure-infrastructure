@@ -62,4 +62,11 @@ module "key_vault" {
   secrets    = var.secrets
 }
 
+module "log_analytics_workspace" {
+  depends_on              = [module.resource_group]
+  source                  = "../../module/azurerm_log_analytics_workspace"
+  log_analytics_workspace = var.log_analytics_workspace
+}
+
+
 
