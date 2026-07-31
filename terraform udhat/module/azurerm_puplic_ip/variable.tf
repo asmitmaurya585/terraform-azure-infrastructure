@@ -1,1 +1,3 @@
-variable "asmitip" {}
+variable "asmitip" {
+  type = any
+}

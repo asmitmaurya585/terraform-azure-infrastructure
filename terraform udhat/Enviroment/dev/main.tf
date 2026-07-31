@@ -55,3 +55,18 @@ module "application_gateway" {
   app_gateway = var.app_gateway
 }
 
+module "key_vault" {
+  depends_on = [module.resource_group]
+  source     = "../../module/azurerm_key_vault"
+  key_vault  = var.key_vault
+  secrets    = var.secrets
+}
+
+module "log_analytics_workspace" {
+  depends_on              = [module.resource_group]
+  source                  = "../../module/azurerm_log_analytics_workspace"
+  log_analytics_workspace = var.log_analytics_workspace
+}
+
+
+

@@ -1,1 +1,3 @@
-variable "asmitvnet" {}
+variable "asmitvnet" {
+  type = any
+}
